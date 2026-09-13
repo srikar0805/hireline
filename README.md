@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HireLine
 
-## Getting Started
+A free tool for job seekers. Paste a job link and HireLine will:
 
-First, run the development server:
+1. **Read the posting** through the job board's official public API (Greenhouse, Lever, Ashby, Workday, SmartRecruiters) or the page's structured `JobPosting` data.
+2. **Name the hiring team**: the two manager titles and two recruiter titles most likely to own the role, based on function, seniority and team, with one-click LinkedIn, Google and Bing searches for public profiles.
+3. **Work out the email format**: find the company's domain, confirm it receives mail (DNS MX lookup), and read public pages on that domain for real addresses that reveal the naming format.
+4. **Draft the email**: a short note built from your one-line pitch, a result you're proud of, and skills matched between your resume and the posting. It opens in Gmail, Outlook or your mail app.
+5. **Track outreach**: saved jobs, contacts, status, notes, follow-up reminders and CSV export, all in `localStorage`.
+
+No accounts, no database, no paid APIs.
+
+## How it compares to paid lookup tools
+
+Paid tools buy contact databases and verify inboxes through data vendors. HireLine does neither, which is what keeps it free:
+
+| | Paid tools | HireLine |
+| --- | --- | --- |
+| Who the contacts are | Picked from a purchased database | Role-specific titles plus guided searches; you pick the person |
+| Email | Vendor-verified | Format detected from the company's own site, ranked guesses |
+| Your data | Stored on their servers | Stays in your browser |
+
+## Run it
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project layout
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+  app/
+    page.tsx               landing page
+    find/page.tsx          the lookup tool
+    tracker/page.tsx       outreach tracker
+    api/lookup/route.ts    job link -> job, company email info, hiring team
+    api/company/route.ts   re-check a corrected company domain
+  components/              UI (finder, contact cards, composer, tracker)
+  lib/
+    roles.ts               function / seniority / team -> likely titles
+    email.ts               name parsing and email format guesses
+    draft.ts               skill matching, email template, compose links
+    search-links.ts        LinkedIn, Google and Bing people searches
+    storage.ts             localStorage tracker and profile
+    server/
+      job-parser.ts        ATS APIs, JSON-LD and meta tag parsing
+      company.ts           domain guessing, MX lookup, email format scan
+      safe-fetch.ts        SSRF-safe fetch (blocks private IPs, caps size and redirects)
+      rate-limit.ts        simple in-memory per-IP limiter
+```
 
-## Learn More
+## Deploy for free
 
-To learn more about Next.js, take a look at the following resources:
+Any Node host works. On Vercel's free Hobby plan, import the repo and deploy with the defaults. The API routes need the Node.js runtime (they use `node:dns`), which is the default.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Limitations
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Email addresses are **not verified**. Confirming a specific inbox needs paid data or SMTP probing, which is unreliable and frequently blocked.
+- Some sites (parts of LinkedIn and Indeed, JavaScript-only career pages) block automated reading. Use manual entry for those.
+- The rate limiter is in-memory, so it resets on restart and isn't shared across server instances.
 
-## Deploy on Vercel
+## Data and privacy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+HireLine only reads public job postings, public company web pages and DNS records. It doesn't scrape LinkedIn profiles, store lookups on a server, or collect personal data. Your profile, resume text and tracker never leave your browser.
