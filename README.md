@@ -2,7 +2,7 @@
 
 A free tool for job seekers. Paste a job link and HireLine will:
 
-1. **Read the posting** through the job board's official public API (Greenhouse, Lever, Ashby, Workday, SmartRecruiters) or the page's structured `JobPosting` data.
+1. **Read the posting** through the job board's official public API (Greenhouse, Lever, Workday, SmartRecruiters) or the page's structured `JobPosting` data (Ashby and most company career pages).
 2. **Name the hiring team**: the two manager titles and two recruiter titles most likely to own the role, based on function, seniority and team, with one-click LinkedIn, Google and Bing searches for public profiles.
 3. **Work out the email format**: find the company's domain, confirm it receives mail (DNS MX lookup), and read public pages on that domain for real addresses that reveal the naming format.
 4. **Draft the email**: a short note built from your one-line pitch, a result you're proud of, and skills matched between your resume and the posting. It opens in Gmail, Outlook or your mail app.

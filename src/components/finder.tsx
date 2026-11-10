@@ -12,7 +12,7 @@ import { ContactCard, inputClass, type ContactValue, type Recipient } from "./co
 const SOURCE_LABEL: Record<JobSource, string> = {
   greenhouse: "Greenhouse API",
   lever: "Lever API",
-  ashby: "Ashby API",
+  ashby: "Ashby job page data",
   workday: "Workday",
   smartrecruiters: "SmartRecruiters API",
   jsonld: "Job page data",
@@ -332,7 +332,7 @@ function EmptyState() {
   return (
     <div className="mt-10 grid gap-4 md:grid-cols-3">
       {[
-        ["Official job board APIs", "Greenhouse, Lever, Ashby, Workday and SmartRecruiters links are read directly."],
+        ["Official job board APIs", "Greenhouse, Lever, Workday and SmartRecruiters links are read directly; Ashby links from each posting's structured data."],
         ["Real email formats", "We look for real addresses on the company's own site to learn its format."],
         ["Your inbox, your data", "Emails open in Gmail or Outlook. Your tracker lives in this browser."],
       ].map(([title, body]) => (

@@ -48,7 +48,7 @@ const FAQ = [
   },
   {
     q: "Which job sites work?",
-    a: "Greenhouse, Lever, Ashby, Workday and SmartRecruiters links are read through their official public APIs. Most company career pages work through their structured job data. For sites that block automated reading, like some LinkedIn and Indeed pages, you can type the company and title in manually.",
+    a: "Greenhouse, Lever, Workday and SmartRecruiters links are read through their official public APIs. Ashby links and most company career pages work through their structured job data. For sites that block automated reading, like some LinkedIn and Indeed pages, you can type the company and title in manually.",
   },
   {
     q: "Should I still apply through the website?",
